@@ -1,14 +1,38 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FormsModule } from "@angular/forms";
 import { AppComponent } from './app.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { RouterModule, Routes } from "@angular/router";
+import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './contact/contact.component';
+import { HomeComponent } from './home/home.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+const routes:Routes=[
+  {path: 'home', component: HomeComponent},
+  {path: 'about', component: AboutComponent},
+  {path: 'contact', component: ContactComponent},
+  {path: '', redirectTo: 'home', pathMatch:'full'},
+  { path: 'cart', loadChildren: () => import('./shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule) },
+  { path: 'store', loadChildren: () => import('./store/store.module').then(m => m.StoreModule) },
 
+  {path: '**', component: NotFoundComponent}
+  
+];
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavbarComponent,
+    AboutComponent,
+    ContactComponent,
+    HomeComponent,
+    NotFoundComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    RouterModule.forRoot(routes),
+    FormsModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
